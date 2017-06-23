@@ -1,0 +1,31 @@
+---
+- !policy
+  id: jenkins
+  annotations:
+    description: Conjur policy for Jenkins executors
+  body:
+    # Layer of hosts
+    - !layer &executors_layer
+      id: executors
+      annotations:
+        description: Layer for Jenkins executors
+
+    # Host factory for 'executors' layer
+    - !host-factory
+      id: executors
+      annotations:
+        description: Host Factory for Jenkins executors
+      layer: [ *executors_layer ]
+
+    # Declaring variables that we can load secrets into
+    # Best practice is to not declare orthogonal variables in this policy, but this is a demo
+    # We could also auto-rotate these AWS secrets, but that's getting out of scope
+    - &variables
+      - !variable aws/iam/users/jenkins-executor/access_key_id
+      - !variable aws/iam/users/jenkins-executor/secret_access_key
+
+    # Permit the hosts in the 'executors' layer to fetch the secrets
+    - !permit
+      role: *executors_layer
+      privileges: [ read, execute ]
+      resources: *variables
