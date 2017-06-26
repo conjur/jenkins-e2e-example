@@ -40,7 +40,7 @@ by using Conjur's [Host Factory]() auto-enrollment system.
 
     $ docker-compose exec conjur conjur variable values add aws/users/jenkins/secret_access_key 46s31x2x4rsf
     Value added
-  ```
+    ```
 
 3. Create a Jenkins job.
 
