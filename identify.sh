@@ -20,7 +20,7 @@ function fetch_machine_identity() {
 
   if [ $status -eq 201 ]; then
     cat > /etc/conjur.identity <<EOF
-    machine https://conjur/api/authn/authn
+    machine https://conjur/api/authn
     login host/$hostid
     password $(jq -r '.api_key' /src/host.json)
 EOF

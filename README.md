@@ -27,11 +27,13 @@ Once the environment is ready:
 
 1. Log into Jenkins and run the 'poc' job.
 
-TODO
+http://localhost:8080/job/poc/
 
 2. View the audit of secret fetches in the Conjur web UI.
 
-TODO
+- https://localhost/ui/hosts/jenkins%2Fmasters%2Fmaster01/
+- https://localhost/ui/variables/aws%2Fusers%2Fjenkins%2Faccess_key_id/
+- https://localhost/ui/variables/aws%2Fusers%2Fjenkins%2Fsecret_access_key/
 
 ---
 

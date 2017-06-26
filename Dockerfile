@@ -18,5 +18,7 @@ RUN curl -L -o summon-conjur.tgz \
 # Switch back to Jenkins user, be a good Docker citizen
 USER jenkins
 
+COPY conjur.conf /etc/conjur.conf
+
 # Entrypoint script fetches machine identity and then runs Jenkins using tini, same as source image.
 COPY identify.sh /src/identify.sh
