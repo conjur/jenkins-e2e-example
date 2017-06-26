@@ -23,7 +23,7 @@ by using Conjur's [Host Factory]() auto-enrollment system.
 2. Load a Conjur policy for Jenkins:
 
   ```sh-session
-  $ docker-compose exec conjur conjur policy load --as-group security_admin jenkins-policy.yml
+  $ docker-compose exec conjur conjur policy load --as-group security_admin policy.yml
   ```
 
   If prompted for authentication, use `admin:secret`.
