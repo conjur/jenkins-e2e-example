@@ -44,4 +44,7 @@ by using Conjur's [Host Factory]() auto-enrollment system.
 
 3. Create a Jenkins job.
 
+Log in to the Jenkins master, http://localhost:8080/.
+See `./jenkins_home/secrets/initialAdminPassword` in the project dir for the initial admin password.
+
 4. Launch a Jenkins executor.
