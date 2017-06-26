@@ -1,8 +1,8 @@
 # jenkins-e2e
 
 An example of an end-to-end Conjur + Jenkins integration.
-In this demo, Jenkins executors assume Conjur machine identity
-by using Conjur's [Host Factory]() auto-enrollment system.
+In this example, a Jenkins master assumes Conjur machine identity
+by using Conjur's [Host Factory](https://developer.conjur.net/reference/services/host_factory/) auto-enrollment system.
 
 ## Requirements
 
@@ -11,14 +11,23 @@ by using Conjur's [Host Factory]() auto-enrollment system.
 
 ## Usage
 
+Once the environment is ready:
+- Jenkins web UI is now available on port `8080`: http://localhost:8080.
+- Conjur web UI is now available on port `443`: https://localhost/ui:
+
+Note: to tear down the enviroment, use this: `docker-compose down -v`.
+
+### (Mostly) Automated
+
+Run `e2e.sh`. When prompted for authentication, use username `admin` and password `secret`.
+
+### Walkthrough
+
 1. Start Conjur and Jenkins:
 
     ```sh-session
     $ docker-compose up -d
     ```
-
-    - Conjur UI is now available on port `443`: https://localhost/ui:
-    - Jenkins UI is now available on port `8080`: http://localhost:8080.
 
 2. Load a Conjur policy for Jenkins:
 
@@ -42,9 +51,4 @@ by using Conjur's [Host Factory]() auto-enrollment system.
     Value added
     ```
 
-3. Create a Jenkins job.
-
-Log in to the Jenkins master, http://localhost:8080/.
-See `./jenkins_home/secrets/initialAdminPassword` in the project dir for the initial admin password.
-
-4. Launch a Jenkins executor.
+...TODO

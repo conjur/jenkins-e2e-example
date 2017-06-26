@@ -1,2 +1,6 @@
-jenkins_home/
+
+jenkins_home/**/*
+!/jenkins_home/jobs/test/config.xml
+
+
 hftoken.txt
