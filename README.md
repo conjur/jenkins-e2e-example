@@ -11,25 +11,39 @@ by using Conjur's [Host Factory](https://developer.conjur.net/reference/services
 
 ## Usage
 
+### Setup
+
+#### (Mostly) Automated
+
+Run `e2e.sh`. When prompted for authentication, use username `admin` and password `secret`.
+
+Note: to tear down the enviroment, use this: `docker-compose down -v`.
+
+## Walkthrough
+
 Once the environment is ready:
 - Jenkins web UI is now available on port `8080`: http://localhost:8080.
 - Conjur web UI is now available on port `443`: https://localhost/ui:
 
-Note: to tear down the enviroment, use this: `docker-compose down -v`.
+1. Log into Jenkins and run the 'poc' job.
 
-### (Mostly) Automated
+TODO
 
-Run `e2e.sh`. When prompted for authentication, use username `admin` and password `secret`.
+2. View the audit of secret fetches in the Conjur web UI.
 
-### Walkthrough
+TODO
 
-1. Start Conjur and Jenkins:
+---
+
+### Setup (Manual)
+
+1. Start Conjur and Jenkins.
 
     ```sh-session
     $ docker-compose up -d
     ```
 
-2. Load a Conjur policy for Jenkins:
+2. Load a Conjur policy for Jenkins.
 
     ```sh-session
     $ docker-compose exec conjur conjur policy load --as-group security_admin policy.yml
@@ -51,4 +65,8 @@ Run `e2e.sh`. When prompted for authentication, use username `admin` and passwor
     Value added
     ```
 
-...TODO
+3. Assign Conjur identity to the Jenkins master.
+
+    ```sh-session
+    docker-compose exec jenkins /src/identify.sh
+    ```
