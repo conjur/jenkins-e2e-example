@@ -42,11 +42,16 @@ function generate_host_factory_token() {
   echo "Generating Host Factory token"
   echo "-----"
   docker-compose exec conjur \
-    conjur hostfactory tokens create --duration-days 1 jenkins/executors | jq -r '.[0].token' | tee hftoken.txt
+    conjur hostfactory tokens create --duration-days 1 jenkins/masters | jq -r '.[0].token' | tee hftoken.txt
 }
 
 function issue_jenkins_identity() {
-  docker-compose exec jenkins /src/identify.sh
+  # Copy the public SSL cert out of Conjur master
+  docker cp "$(docker-compose ps -q conjur):/opt/conjur/etc/ssl/ca.pem" conjur.pem
+  # Copy that cert into the Jenkins master
+  docker cp conjur.pem "$(docker-compose ps -q jenkins):/etc/conjur.pem"
+
+  docker-compose exec --user root jenkins /src/identify.sh
 }
 
 function show_output() {

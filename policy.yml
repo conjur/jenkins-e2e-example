@@ -1,5 +1,5 @@
 ---
-# Conjur policy for Jenkins executors
+# Conjur policy for Jenkins masters
 
 # Declaring variables that we can load secrets into
 # Best practice is to not declare orthogonal variables in this policy, but this is a demo
@@ -11,23 +11,23 @@
 - !policy
   id: jenkins
   annotations:
-    description: Conjur policy for Jenkins executors
+    description: Conjur policy for Jenkins
   body:
     # Layer of hosts
-    - !layer &executors_layer
-      id: executors
+    - !layer &masters_layer
+      id: masters
       annotations:
-        description: Layer for Jenkins executors
+        description: Layer for Jenkins masters
 
-    # Host factory for 'executors' layer
+    # Host factory for 'masters' layer
     - !host-factory
-      id: executors
+      id: masters
       annotations:
-        description: Host Factory for Jenkins executors
-      layer: [ *executors_layer ]
+        description: Host Factory for Jenkins masters
+      layer: [ *masters_layer ]
 
-    # Permit the hosts in the 'executors' layer to fetch the secrets
+    # Permit the hosts in the 'masters' layer to fetch the secrets
     - !permit
-      role: *executors_layer
+      role: *masters_layer
       privileges: [ read, execute ]
       resources: *variables

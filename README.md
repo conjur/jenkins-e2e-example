@@ -67,6 +67,15 @@ TODO
 
 3. Assign Conjur identity to the Jenkins master.
 
+    First, copy the Conjur public SSL cert to the Jenkins master:
+
     ```sh-session
-    docker-compose exec jenkins /src/identify.sh
+    $ docker copy "$(docker-compose ps -q conjur):/opt/conjur/etc/ssl/ca.pem" conjur.pem
+    $ docker copy conjur.pem "$(docker-compose ps -q jenkins):/etc/conjur.pem"
+    ```
+
+    Now apply a Conjur identity to the Jenkins master:
+
+    ```sh-session
+    docker-compose exec --user root jenkins /src/identify.sh
     ```

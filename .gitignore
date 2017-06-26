@@ -4,3 +4,5 @@ jenkins_home/**/*
 
 
 hftoken.txt
+conjur.pem
+host.json
