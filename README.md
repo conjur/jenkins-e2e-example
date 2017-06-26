@@ -15,7 +15,11 @@ by using Conjur's [Host Factory](https://developer.conjur.net/reference/services
 
 #### (Mostly) Automated
 
-Run `e2e.sh`. When prompted for authentication, use username `admin` and password `secret`.
+```sh-session
+$ ./e2e.sh
+```
+
+When prompted for authentication, use username `admin` and password `secret`.
 
 Note: to tear down the enviroment, use this: `docker-compose down -v`.
 
@@ -27,7 +31,7 @@ Once the environment is ready:
 
 1. Log into Jenkins and run the 'poc' job.
 
-http://localhost:8080/job/poc/
+- http://localhost:8080/job/poc/
 
 2. View the audit of secret fetches in the Conjur web UI.
 
