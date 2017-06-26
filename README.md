@@ -13,33 +13,33 @@ by using Conjur's [Host Factory]() auto-enrollment system.
 
 1. Start Conjur and Jenkins:
 
-  ```sh-session
-  $ docker-compose up -d
-  ```
+    ```sh-session
+    $ docker-compose up -d
+    ```
 
-  - Conjur UI is now available on port `443`: https://localhost/ui:
-  - Jenkins UI is now available on port `8080`: http://localhost:8080.
+    - Conjur UI is now available on port `443`: https://localhost/ui:
+    - Jenkins UI is now available on port `8080`: http://localhost:8080.
 
 2. Load a Conjur policy for Jenkins:
 
-  ```sh-session
-  $ docker-compose exec conjur conjur policy load --as-group security_admin policy.yml
-  ```
+    ```sh-session
+    $ docker-compose exec conjur conjur policy load --as-group security_admin policy.yml
+    ```
 
-  If prompted for authentication, use `admin:secret`.
+    If prompted for authentication, use `admin:secret`.
 
-  This is also the username/password for the Conjur UI.
-  In the Conjur UI, you can now see the policy: https://localhost/ui/policies/jenkins/.
+    This is also the username/password for the Conjur UI.
+    In the Conjur UI, you can now see the policy: https://localhost/ui/policies/jenkins/.
 
-  Load some values for the two variables we defined in policy.
-  It doesn't really matter what the values are for this example:
+    Load some values for the two variables we defined in policy.
+    It doesn't really matter what the values are for this example:
 
-  ```sh-session
-  $ docker-compose exec conjur conjur variable values add jenkins/aws/iam/users/jenkins-executor/access_key_id n8p9asdh89p
-  Value added
+    ```sh-session
+    $ docker-compose exec conjur conjur variable values add aws/users/jenkins/access_key_id n8p9asdh89p
+    Value added
 
-  $ docker-compose exec conjur conjur variable values add jenkins/aws/iam/users/jenkins-executor/secret_access_key 46s31x2x4rsf
-  Value added
+    $ docker-compose exec conjur conjur variable values add aws/users/jenkins/secret_access_key 46s31x2x4rsf
+    Value added
   ```
 
 3. Create a Jenkins job.
