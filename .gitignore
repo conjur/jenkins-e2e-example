@@ -1,7 +1,8 @@
 
-jenkins_home/**/*
-!/jenkins_home/jobs/test/config.xml
-
+jenkins_without_conjur/**/*
+!/jenkins_without_conjur/jobs/poc/config.xml
+jenkins_with_conjur/**/*
+!/jenkins_with_conjur/jobs/poc/config.xml
 
 hftoken.txt
 conjur.pem

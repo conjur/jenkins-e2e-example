@@ -11,12 +11,19 @@ services:
       - .:/src
     working_dir: /src
 
-  jenkins:
+  jenkins_without_conjur:
+    image: jenkins:2.60.1
+    ports:
+      - '8080:8080'    # Jenkins API and web UI
+    volumes:
+      - ./jenkins_without_conjur:/var/jenkins_home
+      - .:/src
+
+  jenkins_with_conjur:
     build: .
     image: jenkins:2.60.1-conjur  # LTS release
     ports:
-      - '8080:8080'  # Jenkins API and web UI
-      - '50000:50000'  # Jenkins executor JNLP port
+      - '8081:8080'    # Jenkins API and web UI
     volumes:
-      - ./jenkins_home:/var/jenkins_home
+      - ./jenkins_with_conjur:/var/jenkins_home
       - .:/src

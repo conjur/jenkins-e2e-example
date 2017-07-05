@@ -19,7 +19,8 @@ function start_conjur() {
 }
 
 function start_jenkins() {
-  docker-compose up -d --build jenkins
+  docker-compose up -d jenkins_without_conjur
+  docker-compose up -d --build jenkins_with_conjur
 }
 
 function load_conjur_policy() {
@@ -33,9 +34,9 @@ function load_conjur_variable_values() {
   echo "Loading values for secrets"
   echo "-----"
   docker-compose exec conjur \
-    conjur variable values add aws/users/jenkins/access_key_id n8p9asdh89p
+    conjur variable values add aws/users/jenkins/access_key_id AKIAIOSFODNN7EXAMPLE
   docker-compose exec conjur \
-    conjur variable values add aws/users/jenkins/secret_access_key 46s31x2x4rsf
+    conjur variable values add aws/users/jenkins/secret_access_key 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY'
 }
 
 function generate_host_factory_token() {
@@ -49,14 +50,17 @@ function issue_jenkins_identity() {
   # Copy the public SSL cert out of Conjur master
   docker cp "$(docker-compose ps -q conjur):/opt/conjur/etc/ssl/ca.pem" conjur.pem
   # Copy that cert into the Jenkins master
-  docker cp conjur.pem "$(docker-compose ps -q jenkins):/etc/conjur.pem"
+  docker cp conjur.pem "$(docker-compose ps -q jenkins_with_conjur):/etc/conjur.pem"
 
-  docker-compose exec --user root jenkins /src/identify.sh
+  docker-compose exec --user root jenkins_with_conjur /src/identify.sh
 }
 
 function show_output() {
-  echo "Jenkins web URL: http://localhost:8080"
-  echo "Jenkins 'admin' password: $(cat jenkins_home/secrets/initialAdminPassword)"
+  echo "Jenkins without Conjur web URL: http://localhost:8080"
+  echo "Jenkins without Conjur 'admin' password: $(cat jenkins_without_conjur/secrets/initialAdminPassword)"
+  echo "-----"
+  echo "Jenkins with Conjur web URL: http://localhost:8081"
+  echo "Jenkins with Conjur 'admin' password: $(cat jenkins_with_conjur/secrets/initialAdminPassword)"
   echo "-----"
   echo "Conjur web UI: https://localhost/ui"
   echo "Conjur 'admin' password: secret"

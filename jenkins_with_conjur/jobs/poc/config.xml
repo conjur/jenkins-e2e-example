@@ -13,7 +13,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>bash /src/fetch_secrets.sh</command>
+      <command>bash /src/fetch_secrets_with_conjur.sh</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>
